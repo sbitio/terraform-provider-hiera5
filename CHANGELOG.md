@@ -1,3 +1,11 @@
+## 0.2.5 (2021-01-25)
+
+FEATURES:
+* Add `bool` data source.
+
+NOTES:
+* Never released to mantain version compatibility with https://github.com/chriskuchin/terraform-provider-hiera5
+
 ## 0.2.4 (2021-01-25)
 
 FEATURES:
