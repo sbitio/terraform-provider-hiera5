@@ -1,5 +1,9 @@
 ## 0.2.6 (Unreleased)
 
+BUG FIXES:
+
+* Leverage upstream bug fixes by updating dependencies
+
 ## 0.2.5 (2021-01-25)
 
 FEATURES:
