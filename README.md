@@ -106,6 +106,12 @@ Take a look at [test-fixtures](./hiera5/test-fixtures)
 
 * [Go](https://golang.org/doc/install) 1.12
 
+### Docker + make
+
+You can use [golang's docker](https://hub.docker.com/_/golang) to test/build/etc. this repository. By example you can run acceptance tests using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.12 make testacc`
+
+Please refer to the `Makefile` for available commands.
+
 ### Notes
 
 [This repository is vendored as recomended on Terraform's docs](https://www.terraform.io/docs/extend/terraform-0.12-compatibility.html#upgrading-to-the-latest-terraform-sdk)
