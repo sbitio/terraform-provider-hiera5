@@ -1,4 +1,10 @@
-## 0.2.2 (Unrelased)
+## 0.2.3 (2021-01-25)
+
+BUG FIXES:
+* Some doc fixes
+
+NOTES:
+* Never released to mantain version compatibility with https://github.com/chriskuchin/terraform-provider-hiera5
 
 ## 0.2.2 (2020-04-24)
 
