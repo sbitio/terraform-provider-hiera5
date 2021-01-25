@@ -99,6 +99,7 @@ Take a look at [test-fixtures](./hiera5/test-fixtures)
 
 ## Thanks to
 * Julien Andrieux for writting [Go tools and GitLab: How to do continuous integration like a boss](https://about.gitlab.com/blog/2017/11/27/go-tools-and-gitlab-how-to-do-continuous-integration-like-a-boss/), a really good starting point.
+* [chriskuchin](https://github.com/chriskuchin) for writting default value support and other improvements
 
 ## Develpment
 

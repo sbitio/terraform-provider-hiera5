@@ -4,6 +4,9 @@ FEATURES:
 * Add `default` option to allow a default value to specified.
 * Add docs
 
+NOTES:
+* Never released to mantain version compatibility with https://github.com/chriskuchin/terraform-provider-hiera5
+
 ## 0.2.3 (2021-01-25)
 
 BUG FIXES:
