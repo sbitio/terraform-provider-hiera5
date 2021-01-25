@@ -63,6 +63,27 @@ func TestHiera5Array(t *testing.T) {
 		)
 	}
 
+	v5, err5 := hiera.array("roles")
+	if err5 != nil {
+		t.Errorf("Error running hiera.Array: %s", err)
+	}
+
+	if v5[0] != "fragment1" {
+		t.Errorf(
+			"v5[0] is %s; want %s",
+			v5[0],
+			"fragment1",
+		)
+	}
+
+	if v5[1] != "fragment2" {
+		t.Errorf(
+			"v5[1] is %s; want %s",
+			v5[1],
+			"fragment2",
+		)
+	}
+
 	v2, err2 := hiera.array(keyUnavailable)
 	if err2 == nil || v2 != nil {
 		t.Errorf("Error running hiera.Array: %s", v2)
