@@ -1,3 +1,8 @@
+## 0.2.4 (2021-01-25)
+
+FEATURES:
+* Add `default` option to allow a default value to specified.
+
 ## 0.2.3 (2021-01-25)
 
 BUG FIXES:
