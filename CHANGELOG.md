@@ -2,6 +2,7 @@
 
 FEATURES:
 * Add `default` option to allow a default value to specified.
+* Add docs
 
 ## 0.2.3 (2021-01-25)
 
