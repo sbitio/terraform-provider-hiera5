@@ -39,7 +39,22 @@ provider "hiera5" {
 ### Data Sources
 This provider only implements data sources.
 
-#### Hash
+#### Json
+To retrieve anything JSON encoded:
+```hcl
+data "hiera5_json" "aws_tags" {
+    key = "aws_tags"
+}
+```
+The following output parameters are returned:
+* `id` - matches the key
+* `key` - the queried key
+* `value` - the returned value, JSON encoded
+
+As Terraform doesn't support nested maps or other more complex data structures this data source makes perfect fit dealing with complex values.
+
+#### Hash (one level)
+*Note*: Terraform doesn't support nested maps or other more complex data structures. Any keys containing nested elements won't be returned. Json data source is recomended for complex values
 To retrieve a hash:
 ```hcl
 data "hiera5_hash" "aws_tags" {
@@ -50,8 +65,6 @@ The following output parameters are returned:
 * `id` - matches the key
 * `key` - the queried key
 * `value` - the hash, represented as a map
-
-Terraform doesn't support nested maps or other more complex data structures. Any keys containing nested elements won't be returned.
 
 #### Array
 To retrieve an array:
@@ -79,19 +92,6 @@ The following output parameters are returned:
 
 All values are returned as strings because Terraform doesn't implement other types like int, float or bool. The values will be implicitly converted into the appropriate type depending on usage.
 
-#### Json
-To retrieve anything JSON encoded:
-```hcl
-data "hiera5_json" "aws_tags" {
-    key = "aws_tags"
-}
-```
-The following output parameters are returned:
-* `id` - matches the key
-* `key` - the queried key
-* `value` - the returned value, JSON encoded
-
-As Terraform doesn't support nested maps or other more complex data structures this data source makes perfect fit dealing with complex values.
 
 ## Example
 
