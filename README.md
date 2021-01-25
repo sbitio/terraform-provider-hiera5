@@ -92,6 +92,21 @@ The following output parameters are returned:
 
 All values are returned as strings because Terraform doesn't implement other types like int, float or bool. The values will be implicitly converted into the appropriate type depending on usage.
 
+#### Bool
+To retrieve any other flat value:
+```hcl
+data "hiera5_bool" "enable_spot_instances" {
+  key     = "enable_spot_instances"
+  default = false
+}
+```
+The following output parameters are returned:
+* `id` - matches the key
+* `key` - the queried key
+* `value` - the value
+
+All values are returned as strings because Terraform doesn't implement other types like int, float or bool. The values will be implicitly converted into the appropriate type depending on usage.
+
 
 ## Example
 
