@@ -84,7 +84,7 @@ func (g *S3Getter) Get(dst string, u *url.URL) error {
 	}
 
 	// Create all the parent directories
-	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(dst), g.client.mode(0755)); err != nil {
 		return err
 	}
 
@@ -165,36 +165,24 @@ func (g *S3Getter) getObject(ctx context.Context, client *s3.S3, dst, bucket, ke
 	}
 
 	// Create all the parent directories
-	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(dst), g.client.mode(0755)); err != nil {
 		return err
 	}
 
-	f, err := os.Create(dst)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	_, err = Copy(ctx, f, resp.Body)
-	return err
+	return copyReader(dst, resp.Body, 0666, g.client.umask())
 }
 
 func (g *S3Getter) getAWSConfig(region string, url *url.URL, creds *credentials.Credentials) *aws.Config {
 	conf := &aws.Config{}
-	if creds == nil {
-		// Grab the metadata URL
-		metadataURL := os.Getenv("AWS_METADATA_URL")
-		if metadataURL == "" {
-			metadataURL = "http://169.254.169.254:80/latest"
-		}
-
+	metadataURLOverride := os.Getenv("AWS_METADATA_URL")
+	if creds == nil && metadataURLOverride != "" {
 		creds = credentials.NewChainCredentials(
 			[]credentials.Provider{
 				&credentials.EnvProvider{},
 				&credentials.SharedCredentialsProvider{Filename: "", Profile: ""},
 				&ec2rolecreds.EC2RoleProvider{
 					Client: ec2metadata.New(session.New(&aws.Config{
-						Endpoint: aws.String(metadataURL),
+						Endpoint: aws.String(metadataURLOverride),
 					})),
 				},
 			})
@@ -213,7 +201,7 @@ func (g *S3Getter) getAWSConfig(region string, url *url.URL, creds *credentials.
 		conf.Region = aws.String(region)
 	}
 
-	return conf
+	return conf.WithCredentialsChainVerboseErrors(true)
 }
 
 func (g *S3Getter) parseUrl(u *url.URL) (region, bucket, path, version string, creds *credentials.Credentials, err error) {

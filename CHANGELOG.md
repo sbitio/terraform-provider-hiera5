@@ -1,4 +1,10 @@
-## 0.2.7 (Unreleased)
+## 0.2.8 (Unreleased)
+
+## 0.2.7 (2021-01-26)
+
+BUG FIXES:
+
+* Leverage upstream bug fixes by updating dependencies (now for real)
 
 ## 0.2.6 (2021-01-26)
 

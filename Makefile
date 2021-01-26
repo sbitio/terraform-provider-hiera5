@@ -66,6 +66,20 @@ test-compile:
 	fi
 	go test -c $(TEST) $(TESTARGS)
 
+update-deps-patch:
+	@go get -u=patch
+	@go mod tidy
+
+update-deps-full:
+	@go get -u
+	@go mod tidy
+
+update-vendor-full: update-deps-full
+	@go mod vendor
+
+update-vendor-patch: update-deps-patch
+	@go mod vendor
+
 vet:
 	@echo "go vet ."
 	@go vet $$(go list ./... | grep -v vendor/) ; if [ $$? -eq 1 ]; then \

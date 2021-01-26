@@ -130,7 +130,7 @@ Please refer to the `Makefile` for available commands.
 
 ### Notes
 
-[This repository is vendored as recomended on Terraform's docs](https://www.terraform.io/docs/extend/terraform-0.12-compatibility.html#upgrading-to-the-latest-terraform-sdk) you can update vendored modules using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.12 go mod vendor`
+[This repository is vendored as recomended on Terraform's docs](https://www.terraform.io/docs/extend/terraform-0.12-compatibility.html#upgrading-to-the-latest-terraform-sdk) you can update vendored modules using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15 make update-vendor-patch`
 
 ### Whishlist
 * [ ] Support overriding merge strategy in Data Sources
