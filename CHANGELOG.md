@@ -1,8 +1,11 @@
-## 0.2.6 (Unreleased)
+## 0.2.6 (2021-01-26)
 
 BUG FIXES:
 
 * Leverage upstream bug fixes by updating dependencies
+
+NOTES:
+* Add GitHub mirror + branch + GitHub Actions + gitlab-ci to automate releasing to Terraform's registry. Fix #1
 
 ## 0.2.5 (2021-01-25)
 
