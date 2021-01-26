@@ -1,5 +1,5 @@
 # Base image: https://hub.docker.com/_/golang/
-FROM golang:1.12-buster
+FROM golang:1.15-buster
 MAINTAINER Sbit.io <soporte@sbit.io>
 
 # Install golint

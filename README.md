@@ -25,7 +25,7 @@ provider "hiera5" {
   # Optional
   config = "~/hiera.yaml"
   # Optional
-  scope {
+  scope = {
     environment = "live"
     service     = "api"
     # Complex variables are supported using pdialect
@@ -39,7 +39,22 @@ provider "hiera5" {
 ### Data Sources
 This provider only implements data sources.
 
-#### Hash
+#### Json
+To retrieve anything JSON encoded:
+```hcl
+data "hiera5_json" "aws_tags" {
+    key = "aws_tags"
+}
+```
+The following output parameters are returned:
+* `id` - matches the key
+* `key` - the queried key
+* `value` - the returned value, JSON encoded
+
+As Terraform doesn't support nested maps or other more complex data structures this data source makes perfect fit dealing with complex values.
+
+#### Hash (one level)
+*Note*: Terraform doesn't support nested maps or other more complex data structures. Any keys containing nested elements won't be returned. Json data source is recomended for complex values
 To retrieve a hash:
 ```hcl
 data "hiera5_hash" "aws_tags" {
@@ -50,8 +65,6 @@ The following output parameters are returned:
 * `id` - matches the key
 * `key` - the queried key
 * `value` - the hash, represented as a map
-
-Terraform doesn't support nested maps or other more complex data structures. Any keys containing nested elements won't be returned.
 
 #### Array
 To retrieve an array:
@@ -79,19 +92,21 @@ The following output parameters are returned:
 
 All values are returned as strings because Terraform doesn't implement other types like int, float or bool. The values will be implicitly converted into the appropriate type depending on usage.
 
-#### Json
-To retrieve anything JSON encoded:
+#### Bool
+To retrieve any other flat value:
 ```hcl
-data "hiera5_json" "aws_tags" {
-    key = "aws_tags"
+data "hiera5_bool" "enable_spot_instances" {
+  key     = "enable_spot_instances"
+  default = false
 }
 ```
 The following output parameters are returned:
 * `id` - matches the key
 * `key` - the queried key
-* `value` - the returned value, JSON encoded
+* `value` - the value
 
-As Terraform doesn't support nested maps or other more complex data structures this data source makes perfect fit dealing with complex values.
+All values are returned as strings because Terraform doesn't implement other types like int, float or bool. The values will be implicitly converted into the appropriate type depending on usage.
+
 
 ## Example
 
@@ -99,16 +114,23 @@ Take a look at [test-fixtures](./hiera5/test-fixtures)
 
 ## Thanks to
 * Julien Andrieux for writting [Go tools and GitLab: How to do continuous integration like a boss](https://about.gitlab.com/blog/2017/11/27/go-tools-and-gitlab-how-to-do-continuous-integration-like-a-boss/), a really good starting point.
+* [chriskuchin](https://github.com/chriskuchin) for writting default value support and other improvements
 
 ## Develpment
 
 ### Requirements
 
-* [Go](https://golang.org/doc/install) 1.12
+* [Go](https://golang.org/doc/install) 1.15
+
+### Docker + make
+
+You can use [golang's docker](https://hub.docker.com/_/golang) to test/build/etc. this repository. By example you can run acceptance tests using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.12 make testacc`
+
+Please refer to the `Makefile` for available commands.
 
 ### Notes
 
-[This repository is vendored as recomended on Terraform's docs](https://www.terraform.io/docs/extend/terraform-0.12-compatibility.html#upgrading-to-the-latest-terraform-sdk)
+[This repository is vendored as recomended on Terraform's docs](https://www.terraform.io/docs/extend/terraform-0.12-compatibility.html#upgrading-to-the-latest-terraform-sdk) you can update vendored modules using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.12 go mod vendor`
 
 ### Whishlist
 * [ ] Support overriding merge strategy in Data Sources

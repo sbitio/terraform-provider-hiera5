@@ -9,6 +9,8 @@ defaults:
 hierarchy:
   - name: Service
     path: service/%{service}.yaml
+  - name: Environment fragments
+    glob: environment/%{environment}/*.yaml
   - name: Environment
     path: environment/%{environment}.yaml
   - name: Time Zone
