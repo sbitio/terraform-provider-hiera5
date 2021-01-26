@@ -65,5 +65,12 @@ build:
   script:
     - make
 
+goreleaser:
+  stage: build
+  script:
+    - curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
+    - rm -rf dist
+    - ./bin/goreleaser build --snapshot
+
 include:
   - local: '/ci-tools/.gitlab-ci.yml'
