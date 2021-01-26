@@ -1,5 +1,8 @@
 ## 0.2.8 (Unreleased)
 
+NOTES:
+* Improve README.
+
 ## 0.2.7 (2021-01-26)
 
 BUG FIXES:
