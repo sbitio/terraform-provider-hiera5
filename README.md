@@ -2,6 +2,8 @@
 
 [![pipeline status](https://gitlab.com/sbitio/terraform-provider-hiera5/badges/master/pipeline.svg)](https://gitlab.com/sbitio/terraform-provider-hiera5/-/commits/master) [![coverage report](https://gitlab.com/sbitio/terraform-provider-hiera5/badges/master/coverage.svg)](https://gitlab.com/sbitio/terraform-provider-hiera5/-/commits/master) [![Go Report Card](https://goreportcard.com/badge/gitlab.com/sbitio/terraform-provider-hiera5)](https://goreportcard.com/report/sbitio/terraform-provider-hiera5)
 
+[Hiera5 provider on Terraform's Registry](https://registry.terraform.io/providers/sbitio/hiera5/latest)
+
 This provider implements data sources that can be used to perform hierachical data lookups with Hiera.
 
 This is useful for providing configuration values in an environment with a high level of dimensionality or for making values from an existing Puppet deployment available in Terraform.
@@ -14,9 +16,31 @@ It's based on [Terraform hiera provider](https://github.com/ribbybibby/terraform
 * Painless migration from [Terraform hiera provider](https://github.com/ribbybibby/terraform-provider-hiera), keeping around some naming and data sources
 
 ## Requirements
-* [Terraform](https://www.terraform.io/downloads.html) 0.12.x
+* [Terraform](https://www.terraform.io/downloads.html) 0.12+
 
 ## Usage
+
+### Terraform 0.13+
+
+You can install the provider directly from [Terraform's Resgistry](https://registry.terraform.io/providers/sbitio/hiera5/latest):
+```
+terraform {
+  required_providers {
+    hiera5 = {
+      source = "sbitio/hiera5"
+      version = "0.2.7"
+    }
+  }
+}
+
+provider "hiera5" {
+  # Configuration options
+}
+```
+
+### Terraform <0.13
+
+You can get provider's binaries from [releases on GitHub](https://github.com/sbitio/terraform-provider-hiera5/releases) or compile yourself.
 
 ### Configuration
 To configure the provider:
@@ -131,7 +155,3 @@ Please refer to the `Makefile` for available commands.
 ### Notes
 
 [This repository is vendored as recomended on Terraform's docs](https://www.terraform.io/docs/extend/terraform-0.12-compatibility.html#upgrading-to-the-latest-terraform-sdk) you can update vendored modules using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15 make update-vendor-patch`
-
-### Whishlist
-* [ ] Support overriding merge strategy in Data Sources
-* [ ] Support overriding scope variables in Data Sources
