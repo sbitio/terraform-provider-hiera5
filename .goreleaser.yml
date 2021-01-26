@@ -26,6 +26,7 @@ builds:
     - amd64
 # Lyraproj seems incompatible with '386'
 # errors like 'constant 9223372036854775807 overflows int'
+# Maybe related with https://github.com/lyraproj/dgo/issues/21
 #    - '386'
     - arm
     - arm64
