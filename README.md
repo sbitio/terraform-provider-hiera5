@@ -1,6 +1,10 @@
 # Terraform Hiera 5 Provider
 
-[![pipeline status](https://gitlab.com/sbitio/terraform-provider-hiera5/badges/master/pipeline.svg)](https://gitlab.com/sbitio/terraform-provider-hiera5/-/commits/master) [![coverage report](https://gitlab.com/sbitio/terraform-provider-hiera5/badges/master/coverage.svg)](https://gitlab.com/sbitio/terraform-provider-hiera5/-/commits/master) [![Go Report Card](https://goreportcard.com/badge/gitlab.com/sbitio/terraform-provider-hiera5)](https://goreportcard.com/report/gitlab.com/sbitio/terraform-provider-hiera5)
+[![pipeline status](https://gitlab.com/sbitio/terraform-provider-hiera5/badges/master/pipeline.svg)](https://gitlab.com/sbitio/terraform-provider-hiera5/-/commits/master)
+[![coverage report](https://gitlab.com/sbitio/terraform-provider-hiera5/badges/master/coverage.svg)](https://gitlab.com/sbitio/terraform-provider-hiera5/-/commits/master)
+[![GoDoc](https://godoc.org/gitlab.com/sbitio/terraform-provider-hiera5?status.svg)](https://godoc.org/gitlab.com/sbitio/terraform-provider-hiera5)
+[![Go Report Card](https://goreportcard.com/badge/gitlab.com/sbitio/terraform-provider-hiera5)](https://goreportcard.com/report/gitlab.com/sbitio/terraform-provider-hiera5)
+
 [Hiera5 provider on Terraform's Registry](https://registry.terraform.io/providers/sbitio/hiera5/latest)
 
 This provider implements data sources that can be used to perform hierachical data lookups with Hiera.
@@ -10,7 +14,7 @@ This is useful for providing configuration values in an environment with a high 
 It's based on [Terraform hiera provider](https://github.com/ribbybibby/terraform-provider-hiera) and [SmilingNavern's fork](https://github.com/SmilingNavern/terraform-provider-gohiera)
 
 ## Goals
-* Clean implementation based on [Terraform Plugin SDK](https://www.terraform.io/docs/extend/plugin-sdk.html)
+* Clean implementation based on [Terraform Plugin SDK](https://www.terraform.io/docs/extend/index.html)
 * Clean API implementatation based on [Lyra](https://lyraproj.github.io/)'s [Hiera in golang](https://github.com/lyraproj/hiera)
 * Painless migration from [Terraform hiera provider](https://github.com/ribbybibby/terraform-provider-hiera), keeping around some naming and data sources
 
@@ -147,7 +151,7 @@ Take a look at [test-fixtures](./hiera5/test-fixtures)
 
 ### Docker + make
 
-You can use [golang's docker](https://hub.docker.com/_/golang) to test/build/etc. this repository. By example you can run acceptance tests using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.12 make testacc`
+You can use [golang's docker](https://hub.docker.com/_/golang) to test/build/etc. this repository. By example you can run acceptance tests using `docker run --rm -e GO111MODULE=on -e GOFLAGS="-mod=vendor" -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15 make testacc`
 
 Please refer to the `Makefile` for available commands.
 
