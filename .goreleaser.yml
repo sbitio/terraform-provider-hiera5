@@ -37,6 +37,8 @@ builds:
       goarch: arm
     - goos: linux
       goarch: arm
+    - goos: windows
+      goarch: arm
   binary: '{{ .ProjectName }}_v{{ .Version }}'
 archives:
 - format: zip
