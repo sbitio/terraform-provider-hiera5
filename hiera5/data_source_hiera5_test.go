@@ -30,9 +30,9 @@ func TestAccDataSourceHiera5_Basic(t *testing.T) {
 				ExpectError: regexp.MustCompile("key '" + keyUnavailable + "' not found"),
 			},
 			{
-				Config: testAccDataSourceHiera5Config(key),
+				Config: testAccDataSourceHiera5ConfigDefault(keyUnavailable),
 				Check: resource.ComposeTestCheckFunc(
-					testAccDataSourceHiera5DefaultValueCheck("default"),
+					testAccDataSourceHiera5DefaultValueCheck(keyUnavailable),
 				),
 			},
 		},
@@ -71,7 +71,7 @@ func testAccDataSourceHiera5Check(key string) resource.TestCheckFunc {
 
 func testAccDataSourceHiera5DefaultValueCheck(key string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		name := fmt.Sprintf("data.hiera5.%s", key)
+		name := "data.hiera5.default"
 
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -79,11 +79,11 @@ func testAccDataSourceHiera5DefaultValueCheck(key string) resource.TestCheckFunc
 		}
 
 		attr := rs.Primary.Attributes
-		if attr["id"] != fmt.Sprintf("%s", key) {
+		if attr["id"] != "default" {
 			return fmt.Errorf(
 				"id is %s; want %s",
 				attr["id"],
-				fmt.Sprintf("%s", key),
+				"default",
 			)
 		}
 
@@ -92,6 +92,30 @@ func testAccDataSourceHiera5DefaultValueCheck(key string) resource.TestCheckFunc
 				"value is %s; want %s",
 				attr["value"],
 				"default_value",
+			)
+		}
+
+		name2 := "data.hiera5.empty_default"
+
+		rs2, ok2 := s.RootModule().Resources[name]
+		if !ok2 {
+			return fmt.Errorf("root module has no resource called %s", name2)
+		}
+
+		attr2 := rs2.Primary.Attributes
+		if attr2["id"] != "empty_default" {
+			return fmt.Errorf(
+				"id is %s; want %s",
+				attr["id"],
+				"empty_default",
+			)
+		}
+
+		if attr["value"] != "" {
+			return fmt.Errorf(
+				"value is %s; want %s",
+				attr["value"],
+				"",
 			)
 		}
 
@@ -107,16 +131,35 @@ func testAccDataSourceHiera5Config(key string) string {
 				environment = "live"
 				service     = "api"
 			}
-		        merge = "deep"
+		  merge = "deep"
 		}
 
 		data "hiera5" "%s" {
 		  key = "%s"
 		}
 
+		`, key, key)
+}
+
+func testAccDataSourceHiera5ConfigDefault(key string) string {
+	return fmt.Sprintf(`
+		provider "hiera5" {
+			config = "test-fixtures/hiera.yaml"
+			scope = {
+				environment = "live"
+				service     = "api"
+			}
+		  merge = "deep"
+		}
+
 		data "hiera5" "default" {
-			key = "default"
+			key = "%s"
 			default = "default_value"
+		}
+
+		data "hiera5" "empty_default" {
+			key = "%s"
+			default = ""
 		}
 		`, key, key)
 }

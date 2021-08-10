@@ -31,12 +31,15 @@ func dataSourceHiera5Read(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("[INFO] Reading hiera value")
 
 	keyName := d.Get("key").(string)
-	defaultValue := d.Get("default").(string)
+	defaultValue, defaultExists := d.GetOk("default")
 	hiera := meta.(hiera5)
 
 	v, err := hiera.value(keyName)
-	if err != nil && defaultValue == "" {
+	log.Printf("-----------------MARKER------------------------")
+	if err != nil && !defaultExists {
 		log.Printf("[DEBUG] Error reading hiera value %s", err)
+		log.Printf("[DEBUG] Default value is `%s`", defaultValue)
+		log.Printf("[DEBUG] Default detectec as present: %t", defaultExists)
 		return err
 	}
 
