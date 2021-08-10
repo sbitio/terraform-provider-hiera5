@@ -53,6 +53,9 @@ test: ## Run unittests
 testacc: fmtcheck
 	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
 
+testaccdebug: fmtcheck
+	TF_ACC=1 TF_LOG=DEBUG go test $(TEST) -v $(TESTARGS) -timeout 120m
+
 testtf: fmtcheck
 	go test -i $(TEST) || exit 1
 	echo $(TEST) | \
